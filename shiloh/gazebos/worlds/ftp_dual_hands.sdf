@@ -1,0 +1,565 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="ftp_dual_hands_world">
+    <!-- Physics settings -->
+    <physics name="default" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- Light sources -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.5 0.5 0.5 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- FTP Left Hand -->
+    <model name="ftp_left_hand">
+      <pose>-0.3 0 0.5 0 0 0</pose>
+      <static>true</static>
+      
+      <!-- Base Link -->
+      <link name="left_base_link">
+        <pose>0.0415 0 0 3.1415926535 -1.5707963267 0</pose>
+        <inertial>
+          <mass>0.62266</mass>
+          <pose>-0.000129826516506615 -0.00373209820390109 0.0826860453890524 0 0 0</pose>
+          <inertia>
+            <ixx>0.000221307823686699</ixx>
+            <ixy>1.16490748163886E-06</ixy>
+            <ixz>-5.80325306205011E-07</ixz>
+            <iyy>0.00026513454780435</iyy>
+            <iyz>1.55187520961687E-05</iyz>
+            <izz>0.000132311385681939</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_base_link.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.792 0.820 0.933 1</ambient>
+            <diffuse>0.792 0.820 0.933 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_base_link.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Palm Force Sensor -->
+      <link name="left_palm_force_sensor">
+        <pose>0.00368181 0.012296 0.1196 1.5708 0 0</pose>
+        <inertial>
+          <mass>0.001</mass>
+          <pose>-0.000120093335198468 0.000717297413647363 -0.000692889069965119 0 0 0</pose>
+          <inertia>
+            <ixx>1.79237847416137E-07</ixx>
+            <ixy>-3.62335250998281E-10</ixy>
+            <ixz>2.06838829668637E-10</ixz>
+            <iyy>5.01887324843558E-07</iyy>
+            <iyz>-4.23537057624967E-10</iyz>
+            <izz>6.80017237748533E-07</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_palm_force_sensor.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.412 0.412 0.412 1</ambient>
+            <diffuse>0.412 0.412 0.412 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_palm_force_sensor.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Thumb Segments -->
+      <link name="left_thumb_1">
+        <pose>0.0686 0.02101 0.0689 0 0 0</pose>
+        <inertial>
+          <mass>0.00746</mass>
+          <pose>0.000892542633026139 0.000344874761906076 0.00159995221661673 0 0 0</pose>
+          <inertia>
+            <ixx>1.29835204070593E-07</ixx>
+            <ixy>5.71164167481936E-09</ixy>
+            <ixz>1.48756956370697E-08</ixz>
+            <iyy>1.11222117346005E-07</iyy>
+            <iyz>2.10520547066675E-09</iyz>
+            <izz>7.03400614104064E-08</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_thumb_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_thumb_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Index Finger Segments -->
+      <link name="left_index_1">
+        <pose>0.077359 0.00056467 0.1564 1.6057 0 1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>0.00219417498631414 0.0127409366861228 -0.00664941200246505 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161491626765E-06</ixx>
+            <ixy>-7.33862677697264E-08</ixy>
+            <ixz>-1.02130129088669E-11</ixz>
+            <iyy>5.50297964253695E-07</iyy>
+            <iyz>-2.4656656045715E-11</iyz>
+            <izz>1.17483798775546E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_index_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_index_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Middle Finger Segments -->
+      <link name="left_middle_1">
+        <pose>0.056 0.00056467 0.157 1.5708 0 1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>0.00219417514476306 0.0127409366564024 -0.00664941207814898 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161520197722E-06</ixx>
+            <ixy>-7.33862680995538E-08</ixy>
+            <ixz>-1.02139184270751E-11</ixz>
+            <iyy>5.50298012585693E-07</iyy>
+            <iyz>-2.46573793877139E-11</iyz>
+            <izz>1.17483827063381E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_middle_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_middle_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Ring Finger Segments -->
+      <link name="left_ring_1">
+        <pose>0.034470 0.00056467 0.15683 1.5184 0 1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>0.0021941753069302 0.0127409362457164 -0.0066494113506478 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161545597431E-06</ixx>
+            <ixy>-7.33862914032464E-08</ixy>
+            <ixz>-1.02306404399082E-11</ixz>
+            <iyy>5.50298060557667E-07</iyy>
+            <iyz>-2.46432317692491E-11</iyz>
+            <izz>1.17483845442561E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_ring_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_ring_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Little Finger Segments -->
+      <link name="left_little_1">
+        <pose>0.013084 0.00056467 0.15365 1.4661 0 1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>0.00219418439746801 0.0127409392027769 -0.00664940009923338 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161501430240E-06</ixx>
+            <ixy>-7.33861740599384E-08</ixy>
+            <ixz>-9.70270798846837E-12</ixz>
+            <iyy>5.50297161486766E-07</iyy>
+            <iyz>-2.47676062272043E-11</iyz>
+            <izz>1.17483833262416E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_little_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/left_little_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- FTP Right Hand -->
+    <model name="ftp_right_hand">
+      <pose>0.3 0 0.5 0 0 0</pose>
+      <static>true</static>
+      
+      <!-- Base Link -->
+      <link name="right_base_link">
+        <pose>0.0415 0 0 0 1.5707963267 0</pose>
+        <inertial>
+          <mass>0.62266</mass>
+          <pose>4.56066702604653E-05 -0.003106244650993 0.0721752784828355 0 0 0</pose>
+          <inertia>
+            <ixx>0.000238088630601122</ixx>
+            <ixy>-1.16726665812887E-06</ixy>
+            <ixz>5.77609124558337E-07</ixz>
+            <iyy>0.00028210406583092</iyy>
+            <iyz>1.55368683899448E-05</iyz>
+            <izz>0.000154836898082308</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_base_link.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_base_link.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Palm Force Sensor -->
+      <link name="right_palm_force_sensor">
+        <pose>-0.00036819 0.012296 0.1196 1.5708 0 -3.1416</pose>
+        <inertial>
+          <mass>0.001</mass>
+          <pose>0.000120426871221421 0.000717269582936034 -0.0006928935004962 0 0 0</pose>
+          <inertia>
+            <ixx>1.792409847502E-07</ixx>
+            <ixy>3.5297874278755E-10</ixy>
+            <ixz>-2.06007907879908E-10</ixz>
+            <iyy>5.01925280756008E-07</iyy>
+            <iyz>-4.23310809567535E-10</iyz>
+            <izz>6.80058307355101E-07</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_palm_force_sensor.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.412 0.412 0.412 1</ambient>
+            <diffuse>0.412 0.412 0.412 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_palm_force_sensor.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Thumb Segments -->
+      <link name="right_thumb_1">
+        <pose>-0.0269 0.02101 0.0689 0 0 0</pose>
+        <inertial>
+          <mass>0.00746</mass>
+          <pose>-0.000892586815740379 0.000344905600937098 0.00159994421661698 0 0 0</pose>
+          <inertia>
+            <ixx>1.29835194524364E-07</ixx>
+            <ixy>-5.71160730713237E-09</ixy>
+            <ixz>1.48758957374632E-08</ixz>
+            <iyy>1.11222050936534E-07</iyy>
+            <iyz>-2.10521827472609E-09</iyz>
+            <izz>7.03400601569091E-08</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_thumb_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_thumb_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Index Finger Segments -->
+      <link name="right_index_1">
+        <pose>-0.038679 0.00056467 0.1564 1.6057 0 -1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>-0.00219417482969622 0.0127409366565626 -0.00664941200246505 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161497176563E-06</ixx>
+            <ixy>7.33862739323413E-08</ixy>
+            <ixz>1.02122975969852E-11</ixz>
+            <iyy>5.50297969803493E-07</iyy>
+            <iyz>2.465893504551E-11</iyz>
+            <izz>1.17483803325344E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_index_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_index_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Middle Finger Segments -->
+      <link name="right_middle_1">
+        <pose>-0.0171 0.00056467 0.157 1.5708 0 -1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>-0.00219417478814514 0.0127409366268324 -0.00664941207814898 0 0 0</pose>
+          <inertia>
+            <ixx>1.1316149557554E-06</ixx>
+            <ixy>7.33862743651549E-08</ixy>
+            <ixz>1.02132031162304E-11</ixz>
+            <iyy>5.50297969652712E-07</iyy>
+            <iyz>2.46615051816588E-11</iyz>
+            <izz>1.17483802522199E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_middle_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_middle_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Ring Finger Segments -->
+      <link name="right_ring_1">
+        <pose>0.0045302 0.00056467 0.15683 1.5184 0 -1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>-0.00219417465246989 0.0127409362160862 -0.0066494113506478 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161521046633E-06</ixx>
+            <ixy>7.33862976638613E-08</ixy>
+            <ixz>1.02299251281265E-11</ixz>
+            <iyy>5.50298017624686E-07</iyy>
+            <iyz>2.46423372584933E-11</iyz>
+            <izz>1.17483820891763E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_ring_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_ring_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+
+      <!-- Little Finger Segments -->
+      <link name="right_little_1">
+        <pose>0.025916 0.00056467 0.15365 1.4661 0 -1.5708</pose>
+        <inertial>
+          <mass>0.02841</mass>
+          <pose>-0.00219418424084009 0.0127409391731467 -0.00664940009923338 0 0 0</pose>
+          <inertia>
+            <ixx>1.13161476879442E-06</ixx>
+            <ixy>7.33861803205532E-08</ixy>
+            <ixz>9.70201262730489E-12</ixz>
+            <iyy>5.50297118553785E-07</iyy>
+            <iyz>2.47668324333468E-11</iyz>
+            <izz>1.17483808711618E-06</izz>
+          </inertia>
+        </inertial>
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_little_1.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file://meshes/right_little_1.STL</uri>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <!-- GUI settings -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>1 1 1 0 0.5 2.4</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>

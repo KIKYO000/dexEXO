@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""
+FTP 灵巧手关节1-2映射控制器
+功能:
+  1. 用户发送关节1角度(Excel G列值)
+  2. 通过3次多项式自动计算关节2角度(Excel H列值)
+  3. 同时控制关节1和关节2
+  
+映射模型: 3次多项式拟合 (H = a*G^3 + b*G^2 + c*G + d)
+数据来源: 驱动器行程与角度关系表.xls (G列->H列, 2001个数据点)
+"""
+
+import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float64
+import pandas as pd
+import numpy as np
+import os
+
+
+class Joint12MappingController(Node):
+    def __init__(self):
+        super().__init__('ftp_joint12_mapping_controller')
+        
+        # 加载映射数据
+        self.load_mapping_data()
+        
+        # 定义除大拇指外的4个手指,每只手8个关节
+        fingers = {
+            'right': ['index', 'middle', 'ring', 'little'],
+            'left': ['index', 'middle', 'ring', 'little']
+        }
+        
+        # 存储当前目标位置(用于持续发布)
+        self.current_joint1_targets = {}
+        self.current_joint2_targets = {}
+        
+        # 创建发布者和订阅者
+        self.joint1_subs = {}
+        self.joint1_pubs = {}
+        self.joint2_pubs = {}
+        
+        for hand in ['right', 'left']:
+            for finger in fingers[hand]:
+                # 订阅用户输入的关节1角度
+                input_topic = f'/ftp/{hand}_hand/{finger}/joint1/cmd'
+                self.joint1_subs[f'{hand}_{finger}'] = self.create_subscription(
+                    Float64,
+                    input_topic,
+                    lambda msg, h=hand, f=finger: self.joint1_callback(msg, h, f),
+                    10
+                )
+                
+                # 发布到仿真环境的关节1
+                j1_sim_topic = f'/model/ftp_{hand}_hand_nested/joint/{hand}_{finger}_1_joint/cmd_vel'
+                self.joint1_pubs[f'{hand}_{finger}'] = self.create_publisher(
+                    Float64, j1_sim_topic, 10
+                )
+                
+                # 发布到仿真环境的关节2
+                j2_sim_topic = f'/model/ftp_{hand}_hand_nested/joint/{hand}_{finger}_2_joint/cmd_vel'
+                self.joint2_pubs[f'{hand}_{finger}'] = self.create_publisher(
+                    Float64, j2_sim_topic, 10
+                )
+                
+                # 初始化目标位置为0
+                key = f'{hand}_{finger}'
+                self.current_joint1_targets[key] = 0.0
+                self.current_joint2_targets[key] = 0.0
+        
+        # 创建定时器,以10Hz频率持续发布当前目标位置
+        self.timer = self.create_timer(0.1, self.publish_targets)
+        
+        self.get_logger().info('✅ 关节1-2映射控制器已初始化')
+        self.get_logger().info(f'� 关节1范围: {self.joint1_min:.4f} ~ {self.joint1_max:.4f} rad')
+        self.get_logger().info(f'              ({np.degrees(self.joint1_min):.2f}° ~ {np.degrees(self.joint1_max):.2f}°)')
+        self.get_logger().info(f'📐 关节2范围: {self.joint2_min:.4f} ~ {self.joint2_max:.4f} rad')
+        self.get_logger().info(f'              ({np.degrees(self.joint2_min):.2f}° ~ {np.degrees(self.joint2_max):.2f}°)')
+        self.get_logger().info('')
+        self.get_logger().info('🎮 订阅话题格式: /ftp/<hand>_hand/<finger>/joint1/cmd')
+        self.get_logger().info('   示例: /ftp/right_hand/index/joint1/cmd')
+        self.get_logger().info('   手指: index, middle, ring, little')
+        self.get_logger().info('   手: right_hand, left_hand')
+        self.get_logger().info('   ⚠️  输入角度使用Excel G列值 (1.52~3.14 rad, 87°~180°)')
+    
+    def load_mapping_data(self):
+        """
+        使用3次多项式拟合建立关节1到关节2的映射
+        
+        直接使用Excel中的弧度值:
+        - G列(关节1): 1.52 ~ 3.14 rad (87° ~ 180°)
+        - H列(关节2): 1.29 ~ 3.17 rad (74° ~ 182°)
+        
+        多项式模型: H_rad = a*G_rad^3 + b*G_rad^2 + c*G_rad + d
+        """
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        excel_path = os.path.join(script_dir, '..', '驱动器行程与角度关系表.xls')
+        
+        if not os.path.exists(excel_path):
+            self.get_logger().error(f'❌ 找不到映射文件: {excel_path}')
+            raise FileNotFoundError(excel_path)
+        
+        # 读取 Excel (G列=关节1, H列=关节2)
+        df = pd.read_excel(excel_path, header=None)
+        
+        # 跳过前两行标题,提取角度数据(列索引6和7)
+        G_deg = df.iloc[2:, 6].dropna().values.astype(float)
+        H_deg = df.iloc[2:, 7].dropna().values.astype(float)
+        
+        # 转换为弧度
+        G_rad = np.radians(G_deg)
+        H_rad = np.radians(H_deg)
+        
+        # 数据从大到小,反转为从小到大
+        G_rad = G_rad[::-1]
+        H_rad = H_rad[::-1]
+        
+        # 3次多项式拟合: H = a*G^3 + b*G^2 + c*G + d
+        self.poly_coeffs = np.polyfit(G_rad, H_rad, 3)
+        self.poly_model = np.poly1d(self.poly_coeffs)
+        
+        # 记录范围
+        self.joint1_min = G_rad.min()
+        self.joint1_max = G_rad.max()
+        self.joint2_min = H_rad.min()
+        self.joint2_max = H_rad.max()
+        
+        # 计算拟合精度
+        H_fitted = self.poly_model(G_rad)
+        rmse = np.sqrt(np.mean((H_rad - H_fitted)**2))
+        
+        self.get_logger().info(f'✅ 多项式映射模型已建立 (3次多项式)')
+        self.get_logger().info(f'   数据点: {len(G_rad)}, RMSE: {np.degrees(rmse):.4f}°')
+        self.get_logger().info(f'   系数: a={self.poly_coeffs[0]:.6e}, b={self.poly_coeffs[1]:.6e}')
+        self.get_logger().info(f'        c={self.poly_coeffs[2]:.6e}, d={self.poly_coeffs[3]:.6e}')
+    
+    def map_joint1_to_joint2(self, joint1_angle):
+        """
+        使用3次多项式将关节1角度映射到关节2角度
+        
+        Args:
+            joint1_angle: 关节1角度(弧度, Excel G列值)
+        
+        Returns:
+            joint2_angle: 关节2角度(弧度, Excel H列值)
+        """
+        # 限制在有效范围内
+        joint1_clamped = np.clip(joint1_angle, self.joint1_min, self.joint1_max)
+        
+        if abs(joint1_clamped - joint1_angle) > 0.001:  # 1mm tolerance
+            self.get_logger().warn(
+                f'⚠️  关节1角度超出范围: {joint1_angle:.4f} rad ({np.degrees(joint1_angle):.2f}°), '
+                f'限制为 {joint1_clamped:.4f} rad ({np.degrees(joint1_clamped):.2f}°)'
+            )
+        
+        # 使用多项式计算关节2角度
+        joint2_angle = float(self.poly_model(joint1_clamped))
+        
+        return joint2_angle
+    
+    def joint1_callback(self, msg, hand, finger):
+        """处理关节1角度命令"""
+        joint1_angle = msg.data
+        
+        # 映射到关节2角度
+        joint2_angle = self.map_joint1_to_joint2(joint1_angle)
+        
+        # 更新目标位置
+        key = f'{hand}_{finger}'
+        self.current_joint1_targets[key] = joint1_angle
+        self.current_joint2_targets[key] = joint2_angle
+        
+        self.get_logger().info(
+            f'🎯 {hand} {finger}: J1={joint1_angle:.4f} rad ({np.degrees(joint1_angle):.2f}°) '
+            f'-> J2={joint2_angle:.4f} rad ({np.degrees(joint2_angle):.2f}°)'
+        )
+    
+    def publish_targets(self):
+        """定时器回调:持续发布当前目标位置"""
+        for key in self.current_joint1_targets:
+            # 发布关节1
+            j1_msg = Float64()
+            j1_msg.data = self.current_joint1_targets[key]
+            self.joint1_pubs[key].publish(j1_msg)
+            
+            # 发布关节2
+            j2_msg = Float64()
+            j2_msg.data = self.current_joint2_targets[key]
+            self.joint2_pubs[key].publish(j2_msg)
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    
+    try:
+        controller = Joint12MappingController()
+        rclpy.spin(controller)
+    except KeyboardInterrupt:
+        pass
+    except Exception as e:
+        print(f'❌ 错误: {e}')
+        import traceback
+        traceback.print_exc()
+    finally:
+        if 'controller' in locals():
+            controller.destroy_node()
+        rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

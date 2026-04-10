@@ -1,0 +1,18 @@
+{
+    "arduino.useArduinoCli": true,
+    "arduino.cli.path": "/home/wxc/.local/bin/arduino-cli",
+  
+    "arduino.path": "",            
+    "arduino.commandPath": "",     
+    "arduino.additionalUrls": [],  
+    "arduino.logLevel": "info",
+   
+    "C_Cpp.default.defines": [
+      "ARDUINO=10813",
+      "ARDUINO_ARCH_AVR",
+      "ARDUINO_AVR_MEGA2560"
+    ],
+    "files.associations": { "*.ino": "cpp" }
+
+  }
+  

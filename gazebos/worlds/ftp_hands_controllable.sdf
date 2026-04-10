@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<sdf version="1.7">
+  <world name="ftp_hands_controllable">
+    <!-- Physics settings -->
+    <physics name="default" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- Light sources -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Additional light for better visibility -->
+    <light type="point" name="point_light">
+      <pose>0 0 2 0 0 0</pose>
+      <diffuse>0.5 0.5 0.5 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>50</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+    </light>
+
+    <!-- Ground plane -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- FTP Left Hand - Controllable Version -->
+    <include>
+      <uri>file://urdf/FTP_left_hand.urdf</uri>
+      <name>ftp_left_hand</name>
+      <pose>0 -0.4 0.3 0 -1.5708 -1.5708</pose>
+      <static>true</static>
+    </include>
+
+    <!-- FTP Right Hand - Controllable Version -->
+    <include>
+      <uri>file://urdf/FTP_right_hand.urdf</uri>
+      <name>ftp_right_hand</name>
+      <pose>0 0.4 0.3 0 -1.5708 1.5708</pose>
+      <static>true</static>
+    </include>
+
+    <!-- Camera settings for better view -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0 -1.5 1.0 0 0.5 1.57</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+  </world>
+</sdf>

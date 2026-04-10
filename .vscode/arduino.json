@@ -1,0 +1,7 @@
+{
+    "sketch": "xl330_force_demo/xl330_force_demo.ino",
+    "output": "build",
+    "configuration": "cpu=atmega2560",
+    "board": "arduino:avr:mega",
+    "port": "/dev/ttyUSB0"
+}

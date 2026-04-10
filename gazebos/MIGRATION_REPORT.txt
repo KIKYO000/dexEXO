@@ -1,0 +1,52 @@
+========================================
+FTP双手灵巧手项目移植报告
+========================================
+
+移植时间: Wed Dec  3 12:45:06 PM CST 2025
+源路径: /home/wxc/dexhandsim
+目标路径: /home/wxc/projects/dexEXO/gazebos
+
+已复制的目录:
+  ✓ urdf
+  ✓ models
+  ✓ worlds
+  ✓ meshes
+  ✓ config
+  ✓ scripts
+
+已复制的脚本:
+  ✓ restart_system.sh
+  ✓ start_hand_control.sh
+  ✓ start_joint12_controller.sh
+  ✓ launch_hands_correct.sh
+  ✓ test_hands.sh
+  ✓ reset_hands.sh
+  ✓ test_dual_hands_motion.py
+  ✓ test_thumb_mapping.py
+  ✓ test_thumb.sh
+
+已复制的文档:
+  ✓ README.md
+  ✓ QUICK_TEST_CARD.txt
+  ✓ TEST_SCRIPTS_README.md
+  ✓ TEST_HANDS_MOTION_GUIDE.md
+
+新增的工具:
+  ✓ quick_start.sh - 快速启动菜单
+  ✓ check_environment.sh - 环境检查
+  ✓ QUICK_START.md - 快速入门
+  ✓ MIGRATION_REPORT.txt - 本报告
+
+路径更新:
+  所有脚本中的路径已从:
+    /home/wxc/dexhandsim
+  更新为:
+    /home/wxc/projects/dexEXO/gazebos
+
+下一步操作:
+  1. cd /home/wxc/projects/dexEXO/gazebos
+  2. ./check_environment.sh
+  3. ./restart_system.sh
+  4. ./test_hands.sh --delay 1.5
+
+========================================

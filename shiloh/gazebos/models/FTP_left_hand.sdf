@@ -1,0 +1,1389 @@
+<sdf version='1.9'>
+  <model name='Lhand'>
+    <link name='left_wrist_yaw_link'>
+      <inertial>
+        <pose>0.1242463847643167 0.003707509137286545 -0.0001288354076621597 0 0 0</pose>
+        <mass>0.62365999999999999</mass>
+        <inertia>
+          <ixx>0.00013304844612927499</ixx>
+          <ixy>-1.4942169921412329e-05</ixy>
+          <ixz>-6.0318611124558843e-07</ixz>
+          <iyy>0.00026722878716617729</iyy>
+          <iyz>-1.155233239942823e-06</iyz>
+          <izz>0.00022313569387989379</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wrist_yaw_link_fixed_joint_lump__left_base_link_collision'>
+        <pose>0.0415 0 0 0 -1.570796326794897 3.1415926535</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_base_link.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_wrist_yaw_link_fixed_joint_lump__left_palm_force_sensor_collision_1'>
+        <pose>0.1610999999989308 -0.01229600001073926 0.0003681899886503887 0 1.570796326794897 4.712385307211674</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_palm_force_sensor.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_wrist_yaw_link_fixed_joint_lump__left_base_link_visual'>
+        <pose>0.0415 0 0 0 -1.570796326794897 3.1415926535</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_base_link.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_wrist_yaw_link_fixed_joint_lump__left_palm_force_sensor_visual_1'>
+        <pose>0.1610999999989308 -0.01229600001073926 0.0003681899886503887 0 1.570796326794897 4.712385307211674</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_palm_force_sensor.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='left_index_1_joint' type='revolute'>
+      <pose relative_to='left_wrist_yaw_link'>0.1979000000036198 -0.0005646700140436539 0.03867899998515817 3.106696326889793 3.673205103261262e-06 1.570796326705103</pose>
+      <parent>left_wrist_yaw_link</parent>
+      <child>left_index_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.4380999999999999</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_index_1'>
+      <pose relative_to='left_index_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.002509920090495369 0.01297479140762332 0.006649643639789535 0 0 0</pose>
+        <mass>0.029409999999999999</mass>
+        <inertia>
+          <ixx>1.182703275766139e-06</ixx>
+          <ixy>1.345871520589621e-07</ixy>
+          <ixz>3.328157959153007e-12</ixz>
+          <iyy>6.3542994285695771e-07</iyy>
+          <iyz>-5.9418394703557672e-11</iyz>
+          <izz>1.3072125318929099e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_index_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_1.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_index_1_fixed_joint_lump__left_index_force_sensor_1_collision_1'>
+        <pose>-0.012046 0.019649 0.006651 1.570799999999999 -1.535099999999997 -1.782899999999999</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_index_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_index_1_fixed_joint_lump__left_index_force_sensor_1_visual_1'>
+        <pose>-0.012046 0.019649 0.006651 1.570799999999999 -1.535099999999997 -1.782899999999999</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_index_2_joint' type='revolute'>
+      <pose relative_to='left_index_1'>-0.0034259 0.032596 0.00055 0 0 0</pose>
+      <parent>left_index_1</parent>
+      <child>left_index_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.1400000000000001</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_index_2'>
+      <pose relative_to='left_index_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.0006264741545526607 0.02806665187129065 0.006092824012236325 0 0 0</pose>
+        <mass>0.01418</mass>
+        <inertia>
+          <ixx>2.8519049514222019e-06</ixx>
+          <ixy>6.5467350618869066e-07</ixy>
+          <ixz>4.3838880557752522e-10</ixz>
+          <iyy>4.8992297998610008e-07</iyy>
+          <iyz>-2.9733882066318222e-09</iyz>
+          <izz>2.9982445177620721e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_index_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_2.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_index_2_fixed_joint_lump__left_index_force_sensor_2_collision_1'>
+        <pose>-0.008165499999999999 0.037446 0.0060795 1.570799999999996 -1.533700000000005 -1.221999999999998</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_index_2_fixed_joint_lump__left_index_force_sensor_3_collision_2'>
+        <pose>-0.0086237 0.052572 0.0060954 1.570800000000001 -1.525199999999997 -2.269200000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_index_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_index_2_fixed_joint_lump__left_index_force_sensor_2_visual_1'>
+        <pose>-0.008165499999999999 0.037446 0.0060795 1.570799999999996 -1.533700000000005 -1.221999999999998</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_index_2_fixed_joint_lump__left_index_force_sensor_3_visual_2'>
+        <pose>-0.0086237 0.052572 0.0060954 1.570800000000001 -1.525199999999997 -2.269200000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_index_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_little_1_joint' type='revolute'>
+      <pose relative_to='left_wrist_yaw_link'>0.19514999999749 -0.0005646700137967227 -0.02591600001458086 -3.036888980289794 3.673205103167587e-06 1.570796326705104</pose>
+      <parent>left_wrist_yaw_link</parent>
+      <child>left_little_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.4380999999999999</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_little_1'>
+      <pose relative_to='left_little_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.002509922354609511 0.01297479111808952 0.006649644893039715 0 0 0</pose>
+        <mass>0.029409999999999999</mass>
+        <inertia>
+          <ixx>1.182702657218729e-06</ixx>
+          <ixy>1.3458705953038841e-07</ixy>
+          <ixz>3.144090968132057e-12</ixz>
+          <iyy>6.3542986998849583e-07</iyy>
+          <iyz>-5.9576853325673184e-11</iyz>
+          <izz>1.3072117343447e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_little_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_1.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_little_1_fixed_joint_lump__left_little_force_sensor_1_collision_1'>
+        <pose>-0.012046 0.019649 0.006651 -1.570800000000002 -1.463699999999999 1.358700000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_little_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_little_1_fixed_joint_lump__left_little_force_sensor_1_visual_1'>
+        <pose>-0.012046 0.019649 0.006651 -1.570800000000002 -1.463699999999999 1.358700000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_little_2_joint' type='revolute'>
+      <pose relative_to='left_little_1'>-0.0034259 0.032596 0.00055 0 0 0</pose>
+      <parent>left_little_1</parent>
+      <child>left_little_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.1400000000000001</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_little_2'>
+      <pose relative_to='left_little_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.0001879553800239088 0.02307587683493411 0.006101948806986678 0 0 0</pose>
+        <mass>0.01157</mass>
+        <inertia>
+          <ixx>1.5785964154015889e-06</ixx>
+          <ixy>3.9232410139444642e-07</ixy>
+          <ixz>1.2418270606837271e-10</ixz>
+          <iyy>3.5510381414713483e-07</iyy>
+          <iyz>-2.6006325170250462e-10</iyz>
+          <izz>1.66542168428898e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_little_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_2.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_little_2_fixed_joint_lump__left_little_force_sensor_2_collision_1'>
+        <pose>-0.0064514 0.027683 0.0061172 -1.5708 -1.4597 1.9127</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_little_2_fixed_joint_lump__left_little_force_sensor_3_collision_2'>
+        <pose>-0.0063973 0.042707 0.0061154 -1.5708 -1.433600000000001 0.8655099999999994</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_little_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_little_2_fixed_joint_lump__left_little_force_sensor_2_visual_1'>
+        <pose>-0.0064514 0.027683 0.0061172 -1.5708 -1.4597 1.9127</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_little_2_fixed_joint_lump__left_little_force_sensor_3_visual_2'>
+        <pose>-0.0063973 0.042707 0.0061154 -1.5708 -1.433600000000001 0.8655099999999994</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_little_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_middle_1_joint' type='revolute'>
+      <pose relative_to='left_wrist_yaw_link'>0.1985000000015721 -0.0005646700140975298 0.01709999998510126 -3.141588980289793 3.673205103441296e-06 1.570796326705104</pose>
+      <parent>left_wrist_yaw_link</parent>
+      <child>left_middle_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.4380999999999999</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_middle_1'>
+      <pose relative_to='left_middle_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.002509919898147101 0.01297479160939571 0.006649643621446686 0 0 0</pose>
+        <mass>0.029409999999999999</mass>
+        <inertia>
+          <ixx>1.182703370045336e-06</ixx>
+          <ixy>1.345872142052409e-07</ixy>
+          <ixz>3.338159343346996e-12</ixz>
+          <iyy>6.3542994342262261e-07</iyy>
+          <iyz>-5.9429424468864737e-11</iyz>
+          <izz>1.3072126262606721e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_middle_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_1.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_middle_1_fixed_joint_lump__left_middle_force_sensor_1_collision_1'>
+        <pose>-0.012046 0.019649 0.006651 0 -1.570796326794897 -0.2120924624649948</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_middle_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_middle_1_fixed_joint_lump__left_middle_force_sensor_1_visual_1'>
+        <pose>-0.012046 0.019649 0.006651 0 -1.570796326794897 -0.2120924624649948</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_middle_2_joint' type='revolute'>
+      <pose relative_to='left_middle_1'>-0.0034259 0.032596 0.00055 0 0 0</pose>
+      <parent>left_middle_1</parent>
+      <child>left_middle_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.1400000000000001</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_middle_2'>
+      <pose relative_to='left_middle_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.001074772838117583 0.02942814261729454 0.006100608418887393 0 0 0</pose>
+        <mass>0.017610000000000001</mass>
+        <inertia>
+          <ixx>3.475231035454771e-06</ixx>
+          <ixy>7.824688651034052e-07</ixy>
+          <ixz>7.776710486435733e-12</ixz>
+          <iyy>5.4665201287686765e-07</iyy>
+          <iyz>-1.102491929731858e-11</iyz>
+          <izz>3.6491049369511249e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_middle_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_2.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_middle_2_fixed_joint_lump__left_middle_force_sensor_2_collision_1'>
+        <pose>-0.009086 0.040962 0.0061003 0 -1.570796326794897 0.3727965172146084</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_middle_2_fixed_joint_lump__left_middle_force_sensor_3_collision_2'>
+        <pose>-0.0098294 0.056051 0.0061006 0 -1.570796326794897 -0.6743827513939457</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_middle_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_middle_2_fixed_joint_lump__left_middle_force_sensor_2_visual_1'>
+        <pose>-0.009086 0.040962 0.0061003 0 -1.570796326794897 0.3727965172146084</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_middle_2_fixed_joint_lump__left_middle_force_sensor_3_visual_2'>
+        <pose>-0.0098294 0.056051 0.0061006 0 -1.570796326794897 -0.6743827513939457</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_middle_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_ring_1_joint' type='revolute'>
+      <pose relative_to='left_wrist_yaw_link'>0.1983299999995194 -0.0005646700140822651 -0.004530200014882635 -3.089188980289793 3.673205103347999e-06 1.570796326705104</pose>
+      <parent>left_wrist_yaw_link</parent>
+      <child>left_ring_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.4380999999999999</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_ring_1'>
+      <pose relative_to='left_ring_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.002509920947096175 0.01297479134997547 0.006649644051944242 0 0 0</pose>
+        <mass>0.029409999999999999</mass>
+        <inertia>
+          <ixx>1.1827030052278181e-06</ixx>
+          <ixy>1.3458710785195029e-07</ixy>
+          <ixz>3.2153181524728211e-12</ixz>
+          <iyy>6.3542991423919848e-07</iyy>
+          <iyz>-5.9407402879397414e-11</iyz>
+          <izz>1.3072121827040751e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_ring_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_1.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_ring_1_fixed_joint_lump__left_ring_force_sensor_1_collision_1'>
+        <pose>-0.012046 0.019649 0.006651 -1.570800000000002 -1.517200000000001 1.358700000000002</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_ring_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_ring_1_fixed_joint_lump__left_ring_force_sensor_1_visual_1'>
+        <pose>-0.012046 0.019649 0.006651 -1.570800000000002 -1.517200000000001 1.358700000000002</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_ring_2_joint' type='revolute'>
+      <pose relative_to='left_ring_1'>-0.0034259 0.032596 0.00055 0 0 0</pose>
+      <parent>left_ring_1</parent>
+      <child>left_ring_2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.1400000000000001</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_ring_2'>
+      <pose relative_to='left_ring_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.0005771472938884021 0.02795068499558604 0.006092823285255545 0 0 0</pose>
+        <mass>0.01481</mass>
+        <inertia>
+          <ixx>2.8563879856308272e-06</ixx>
+          <ixy>6.5658122367458949e-07</ixy>
+          <ixz>4.379629594840568e-10</ixz>
+          <iyy>4.9073487502390274e-07</iyy>
+          <iyz>-2.9753590289883171e-09</iyz>
+          <izz>3.003539267563625e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_ring_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_2.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_ring_2_fixed_joint_lump__left_ring_force_sensor_2_collision_1'>
+        <pose>-0.008165499999999999 0.037446 0.0060795 -1.570799999999999 -1.515100000000003 1.919599999999999</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_ring_2_fixed_joint_lump__left_ring_force_sensor_3_collision_2'>
+        <pose>-0.0086237 0.052572 0.0060954 -1.570800000000001 -1.502500000000002 0.872370000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_ring_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_ring_2_fixed_joint_lump__left_ring_force_sensor_2_visual_1'>
+        <pose>-0.008165499999999999 0.037446 0.0060795 -1.570799999999999 -1.515100000000003 1.919599999999999</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_ring_2_fixed_joint_lump__left_ring_force_sensor_3_visual_2'>
+        <pose>-0.0086237 0.052572 0.0060954 -1.570800000000001 -1.502500000000002 0.872370000000001</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_ring_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_thumb_1_joint' type='revolute'>
+      <pose relative_to='left_wrist_yaw_link'>0.1104000000006662 -0.02101000000618675 0.02689999999346162 3.1415926535 -1.570796326794897 0</pose>
+      <parent>left_wrist_yaw_link</parent>
+      <child>left_thumb_1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>1.1640999999999999</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_thumb_1'>
+      <pose relative_to='left_thumb_1_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.000892587008927997 0.000344904925262568 0.00159994421521059 0 0 0</pose>
+        <mass>0.0074599999999999996</mass>
+        <inertia>
+          <ixx>1.2983519872666001e-07</ixx>
+          <ixy>5.7116020931941803e-09</ixy>
+          <ixz>-1.48758983716317e-08</ixz>
+          <iyy>1.11222049064813e-07</iyy>
+          <iyz>-2.1052089782025502e-09</iyz>
+          <izz>7.0340059972642503e-08</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_thumb_1_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_1.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='left_thumb_1_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_thumb_2_joint' type='revolute'>
+      <pose relative_to='left_thumb_1'>0.0073431 0.011232 0.0052 1.5708 2.775557561562891e-17 -2.8798</pose>
+      <parent>left_thumb_1</parent>
+      <child>left_thumb_2</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.58640000000000003</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_thumb_2'>
+      <pose relative_to='left_thumb_2_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.01372510999016771 0.01221337884492694 -0.008847935392434482 0 0 0</pose>
+        <mass>0.043639999999999998</mass>
+        <inertia>
+          <ixx>1.251201839692816e-06</ixx>
+          <ixy>1.8029480219306021e-08</ixy>
+          <ixz>-1.368761066415189e-09</ixz>
+          <iyy>1.0287653680000131e-06</iyy>
+          <iyz>-8.6552695065552065e-10</iyz>
+          <izz>1.557296495289587e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_thumb_2_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_2.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_thumb_2_fixed_joint_lump__left_thumb_force_sensor_1_collision_1'>
+        <pose>-0.0087121 0.026305 -0.0089605 0 -1.570796326794897 -1.918703451140428</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_thumb_2_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_thumb_2_fixed_joint_lump__left_thumb_force_sensor_1_visual_1'>
+        <pose>-0.0087121 0.026305 -0.0089605 0 -1.570796326794897 -1.918703451140428</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_1.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_thumb_3_joint' type='revolute'>
+      <pose relative_to='left_thumb_2'>-0.031403 0.021069 -0.001299 0 0 0</pose>
+      <parent>left_thumb_2</parent>
+      <child>left_thumb_3</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.5</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_thumb_3'>
+      <pose relative_to='left_thumb_3_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.01095713335712417 0.004989895020448387 -0.007654974201580485 0 0 0</pose>
+        <mass>0.01601</mass>
+        <inertia>
+          <ixx>6.4810188054370455e-07</ixx>
+          <ixy>1.140077506774713e-07</ixy>
+          <ixz>-2.1132342962729501e-10</ixz>
+          <iyy>5.0539245383194253e-07</iyy>
+          <iyz>8.6889374517637674e-10</iyz>
+          <izz>6.6357805419814483e-07</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_thumb_3_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_3.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_thumb_3_fixed_joint_lump__left_thumb_force_sensor_2_collision_1'>
+        <pose>-0.011771 0.01699 -0.0077514 0 -1.570796326794897 -1.840785603275008</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_thumb_3_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_thumb_3_fixed_joint_lump__left_thumb_force_sensor_2_visual_1'>
+        <pose>-0.011771 0.01699 -0.0077514 0 -1.570796326794897 -1.840785603275008</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_2.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <joint name='left_thumb_4_joint' type='revolute'>
+      <pose relative_to='left_thumb_3'>-0.021903 0.012816 -0.0003 0 0 0</pose>
+      <parent>left_thumb_3</parent>
+      <child>left_thumb_4</child>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>3.1400000000000001</upper>
+          <effort>10</effort>
+          <velocity>1</velocity>
+        </limit>
+        <dynamics>
+          <damping>500</damping>
+          <friction>0</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_thumb_4'>
+      <pose relative_to='left_thumb_4_joint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.0172131853858005 0.006931097660691073 -0.007348565817549889 0 0 0</pose>
+        <mass>0.01172</mass>
+        <inertia>
+          <ixx>7.6933693694022281e-07</ixx>
+          <ixy>3.6106422700120741e-07</ixy>
+          <ixz>-5.3597122800218427e-12</ixz>
+          <iyy>9.2121397843735303e-07</iyy>
+          <iyz>-1.1550438675887e-10</iyz>
+          <izz>1.210998139801285e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_thumb_4_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_4.STL</uri>
+          </mesh>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <collision name='left_thumb_4_fixed_joint_lump__left_thumb_force_sensor_3_collision_1'>
+        <pose>-0.014598 0.014721 -0.0073103 0 -1.570796326794897 -2.111080679354504</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='left_thumb_4_fixed_joint_lump__left_thumb_force_sensor_4_collision_2'>
+        <pose>-0.028987 0.017301 -0.0073513 0 1.570796326794897 -4.197496788334095</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_4.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='left_thumb_4_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_4.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.990196 1 1 1</diffuse>
+          <ambient>0.990196 1 1 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_thumb_4_fixed_joint_lump__left_thumb_force_sensor_3_visual_1'>
+        <pose>-0.014598 0.014721 -0.0073103 0 -1.570796326794897 -2.111080679354504</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_3.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <visual name='left_thumb_4_fixed_joint_lump__left_thumb_force_sensor_4_visual_2'>
+        <pose>-0.028987 0.017301 -0.0073513 0 1.570796326794897 -4.197496788334095</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>../meshes/left_thumb_force_sensor_4.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <diffuse>0.514706 0.514706 0.514706 1</diffuse>
+          <ambient>0.514706 0.514706 0.514706 1</ambient>
+        </material>
+      </visual>
+      <gravity>false</gravity>
+    </link>
+    <frame name='left_palm_force_sensor_joint' attached_to='left_base_link'>
+      <pose>0.000368 0.012296 0.1196 1.5708 -0 -3.14159</pose>
+    </frame>
+    <frame name='left_palm_force_sensor' attached_to='left_palm_force_sensor_joint'/>
+    <frame name='left_base_joint' attached_to='left_wrist_yaw_link'>
+      <pose>0.0415 0 0 3.14159 -1.5708 0</pose>
+    </frame>
+    <frame name='left_base_link' attached_to='left_base_joint'/>
+    <frame name='left_index_force_sensor_1_joint' attached_to='left_index_1'>
+      <pose>-0.012046 0.019649 0.006651 1.5708 -1.5351 -1.7829</pose>
+    </frame>
+    <frame name='left_index_force_sensor_1' attached_to='left_index_force_sensor_1_joint'/>
+    <frame name='left_index_force_sensor_2_joint' attached_to='left_index_2'>
+      <pose>-0.008165 0.037446 0.00608 1.5708 -1.5337 -1.222</pose>
+    </frame>
+    <frame name='left_index_force_sensor_2' attached_to='left_index_force_sensor_2_joint'/>
+    <frame name='left_index_force_sensor_3_joint' attached_to='left_index_2'>
+      <pose>-0.008624 0.052572 0.006095 1.5708 -1.5252 -2.2692</pose>
+    </frame>
+    <frame name='left_index_force_sensor_3' attached_to='left_index_force_sensor_3_joint'/>
+    <frame name='left_little_force_sensor_1_joint' attached_to='left_little_1'>
+      <pose>-0.012046 0.019649 0.006651 -1.5708 -1.4637 1.3587</pose>
+    </frame>
+    <frame name='left_little_force_sensor_1' attached_to='left_little_force_sensor_1_joint'/>
+    <frame name='left_little_force_sensor_2_joint' attached_to='left_little_2'>
+      <pose>-0.006451 0.027683 0.006117 -1.5708 -1.4597 1.9127</pose>
+    </frame>
+    <frame name='left_little_force_sensor_2' attached_to='left_little_force_sensor_2_joint'/>
+    <frame name='left_little_force_sensor_3_joint' attached_to='left_little_2'>
+      <pose>-0.006397 0.042707 0.006115 -1.5708 -1.4336 0.86551</pose>
+    </frame>
+    <frame name='left_little_force_sensor_3' attached_to='left_little_force_sensor_3_joint'/>
+    <frame name='left_middle_force_sensor_1_joint' attached_to='left_middle_1'>
+      <pose>-0.012046 0.019649 0.006651 -2.40686 -1.57079 2.19477</pose>
+    </frame>
+    <frame name='left_middle_force_sensor_1' attached_to='left_middle_force_sensor_1_joint'/>
+    <frame name='left_middle_force_sensor_2_joint' attached_to='left_middle_2'>
+      <pose>-0.009086 0.040962 0.0061 -1.24739 -1.57079 1.62019</pose>
+    </frame>
+    <frame name='left_middle_force_sensor_2' attached_to='left_middle_force_sensor_2_joint'/>
+    <frame name='left_middle_force_sensor_3_joint' attached_to='left_middle_2'>
+      <pose>-0.009829 0.056051 0.006101 -2.29497 -1.57079 1.62059</pose>
+    </frame>
+    <frame name='left_middle_force_sensor_3' attached_to='left_middle_force_sensor_3_joint'/>
+    <frame name='left_ring_force_sensor_1_joint' attached_to='left_ring_1'>
+      <pose>-0.012046 0.019649 0.006651 -1.5708 -1.5172 1.3587</pose>
+    </frame>
+    <frame name='left_ring_force_sensor_1' attached_to='left_ring_force_sensor_1_joint'/>
+    <frame name='left_ring_force_sensor_2_joint' attached_to='left_ring_2'>
+      <pose>-0.008165 0.037446 0.00608 -1.5708 -1.5151 1.9196</pose>
+    </frame>
+    <frame name='left_ring_force_sensor_2' attached_to='left_ring_force_sensor_2_joint'/>
+    <frame name='left_ring_force_sensor_3_joint' attached_to='left_ring_2'>
+      <pose>-0.008624 0.052572 0.006095 -1.5708 -1.5025 0.87237</pose>
+    </frame>
+    <frame name='left_ring_force_sensor_3' attached_to='left_ring_force_sensor_3_joint'/>
+    <frame name='left_thumb_force_sensor_1_joint' attached_to='left_thumb_2'>
+      <pose>-0.008712 0.026305 -0.008961 -1.92029 -1.57079 0.001593</pose>
+    </frame>
+    <frame name='left_thumb_force_sensor_1' attached_to='left_thumb_force_sensor_1_joint'/>
+    <frame name='left_thumb_force_sensor_2_joint' attached_to='left_thumb_3'>
+      <pose>-0.011771 0.01699 -0.007751 -1.8405 -1.5705 0</pose>
+    </frame>
+    <frame name='left_thumb_force_sensor_2' attached_to='left_thumb_force_sensor_2_joint'/>
+    <frame name='left_thumb_force_sensor_3_joint' attached_to='left_thumb_4'>
+      <pose>-0.014598 0.014721 -0.00731 -2.95557 -1.57079 0.844493</pose>
+    </frame>
+    <frame name='left_thumb_force_sensor_3' attached_to='left_thumb_force_sensor_3_joint'/>
+    <frame name='left_thumb_force_sensor_4_joint' attached_to='left_thumb_4'>
+      <pose>-0.028987 0.017301 -0.007351 -1.06409 1.57079 1.02159</pose>
+    </frame>
+    <frame name='left_thumb_force_sensor_4' attached_to='left_thumb_force_sensor_4_joint'/>
+    
+    <!-- Joint Controller Plugin: position control mode with cmd_pos topic -->
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_index_1_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_index_2_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_middle_1_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_middle_2_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_ring_1_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_ring_2_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_little_1_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_little_2_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <!-- Thumb Joint Controllers -->
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_thumb_1_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_thumb_2_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_thumb_3_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+    <plugin filename="libignition-gazebo6-joint-controller-system.so"
+            name="ignition::gazebo::systems::JointController">
+      <joint_name>left_thumb_4_joint</joint_name>
+      <sub_topic>cmd_pos</sub_topic>
+      <use_force_commands>false</use_force_commands>
+      <p_gain>2000.0</p_gain>
+      <i_gain>0.0</i_gain>
+      <d_gain>10.0</d_gain>
+    </plugin>
+  </model>
+</sdf>

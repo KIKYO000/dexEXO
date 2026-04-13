@@ -15,13 +15,27 @@ from inspire_dds._inspire_hand_touch import inspire_hand_touch
 
 
 class TouchCalibrator:
-    def __init__(self):
+    # DDS字段名 → 手指名
+    FINGER_FIELDS = {
+        1: ("fingerfive_top_touch",  "大拇指"),
+        2: ("fingerfour_top_touch",  "食指"),
+        3: ("fingerthree_top_touch", "中指"),
+        4: ("fingertwo_top_touch",   "无名指"),
+        5: ("fingerone_top_touch",   "小指"),
+    }
+
+    def __init__(self, finger_id=2):
         self.latest_touch = None
         self.calibration_points = []  # [(max_value, force_N), ...]
+        self.finger_id = finger_id
+        field, name = self.FINGER_FIELDS[finger_id]
+        self.field_name = field
+        self.finger_name = name
+        print(f"[标定目标] 手指{finger_id} - {name} (DDS字段: {field})")
         
     def touch_callback(self, msg):
         """触觉数据回调"""
-        top = list(msg.fingerfour_top_touch)
+        top = list(getattr(msg, self.field_name, []))
         self.latest_touch = {
             'raw': top,
             'max': max(top) if top else 0,
@@ -152,14 +166,29 @@ class TouchCalibrator:
 
 
 def main():
+    # 命令行参数: python touch_calibration.py [手指ID]
+    # 手指ID: 1=大拇指, 2=食指, 3=中指, 4=无名指, 5=小指
+    finger_id = 2  # 默认食指
+    if len(sys.argv) > 1:
+        try:
+            finger_id = int(sys.argv[1])
+            if finger_id not in range(1, 6):
+                print("错误: 手指ID必须是 1-5")
+                print("  1=大拇指, 2=食指, 3=中指, 4=无名指, 5=小指")
+                return
+        except ValueError:
+            print("用法: python touch_calibration.py [手指ID]")
+            print("  1=大拇指, 2=食指, 3=中指, 4=无名指, 5=小指")
+            return
+
     ChannelFactoryInitialize(0)
     
-    calibrator = TouchCalibrator()
+    calibrator = TouchCalibrator(finger_id)
     sub = ChannelSubscriber("rt/inspire_hand/touch/r", inspire_hand_touch)
     sub.Init(calibrator.touch_callback, 10)
     
     print("=" * 50)
-    print("    触觉传感器标定工具 (最大值)")
+    print(f"    触觉传感器标定工具 — {calibrator.finger_name}")
     print("=" * 50)
     print("\n命令说明:")
     print("  <数字>    - 输入砝码克数，准备标定")

@@ -34,10 +34,16 @@ except ImportError as e:
     print("[提示] 请确保路径正确且已安装 unitree_sdk2py 和 cyclonedds")
     DDS_AVAILABLE = False
 
-# ===== 标定参数 (五指共用) =====
+# ===== 标定参数 =====
 # F(N) = k * raw_max + b
+# 默认标定参数 (食指/中指/无名指/小指共用)
 CALIBRATION_K = 0.00292650244415058227
 CALIBRATION_B = -0.6037947156125716
+
+# 大拇指单独标定参数 (标定后填入实际值)
+# TODO: 在树莓派上运行 python touch_calibration.py 1 标定后替换
+THUMB_CALIBRATION_K = 0.004420145759358057  # ← 标定后替换
+THUMB_CALIBRATION_B = -1.0701492398616255     # ← 标定后替换
 
 # ===== 力值阈值 =====
 FORCE_MIN = 0.0
@@ -91,9 +97,12 @@ class FingerState:
 finger_states = [FingerState(servo_id, name) for _, servo_id, name in FINGER_MAP]
 
 
-def raw_to_force(raw_value: int) -> float:
-    """将触觉原始值转换为力值 (N)"""
-    force = CALIBRATION_K * raw_value + CALIBRATION_B
+def raw_to_force(raw_value: int, servo_id: int = 0) -> float:
+    """将触觉原始值转换为力值 (N)，大拇指(servo_id=1)使用独立标定参数"""
+    if servo_id == 1:
+        force = THUMB_CALIBRATION_K * raw_value + THUMB_CALIBRATION_B
+    else:
+        force = CALIBRATION_K * raw_value + CALIBRATION_B
     if force < 0:
         force = 0.0
     elif force > FORCE_MAX:
@@ -210,7 +219,7 @@ class DDSTouchHandler:
                     raw_value = 0
 
                 fs.last_raw = raw_value
-                force_n = raw_to_force(raw_value)
+                force_n = raw_to_force(raw_value, servo_id)
                 fs.last_force = force_n
 
                 # === 力值发送逻辑 (带迟滞) ===
@@ -281,12 +290,14 @@ def main():
     print("=" * 60)
     print("五指 DDS 触觉数据 → 力值桥接程序")
     print("=" * 60)
-    print(f"标定参数: k={CALIBRATION_K:.8f}, b={CALIBRATION_B:.8f}")
+    print(f"默认标定: k={CALIBRATION_K:.8f}, b={CALIBRATION_B:.8f}")
+    print(f"大拇指标定: k={THUMB_CALIBRATION_K:.8f}, b={THUMB_CALIBRATION_B:.8f}")
     print(f"TCP 目标: {TCP_HOST}:{TCP_PORT}")
     print(f"DDS 话题: {DDS_TOPIC}")
     print("\n手指映射:")
     for field, sid, name in FINGER_MAP:
-        print(f"  {name} (舵机{sid}) ← DDS.{field}")
+        cal = "大拇指独立标定" if sid == 1 else "默认标定"
+        print(f"  {name} (舵机{sid}) ← DDS.{field}  [{cal}]")
     print("=" * 60)
 
     if not DDS_AVAILABLE:

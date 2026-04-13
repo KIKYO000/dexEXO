@@ -52,9 +52,10 @@ PID_KP = 50.0           # 比例系数 (mA/N)
 PID_KI = 20.0           # 积分系数 (mA/(N·s))
 PID_KD = 5.0            # 微分系数 (mA/(N/s))
 PID_DEADZONE = 0.15     # 死区 (N) — 与单指版一致
-PID_OUTPUT_MAX = 400    # 输出电流上限 (mA)
-PID_OUTPUT_MIN = -200.0 # 输出电流下限 (mA)
-PID_INTEGRAL_MAX = 300.0
+PID_OUTPUT_MAX = 250    # 输出电流上限 (mA) — 降低防止5指同时过流
+PID_OUTPUT_MIN = -150.0 # 输出电流下限 (mA)
+PID_INTEGRAL_MAX = 200.0
+TOTAL_CURRENT_LIMIT = 800  # 五指总电流上限 (mA)，防止电源过载
 
 # ===== 滤波参数 =====
 TARGET_FILTER_ALPHA = 0.3    # 与单指版一致
@@ -84,6 +85,7 @@ NUM_FINGERS = 5
 
 # XL330 Control Table Addresses
 ADDR_OPERATING_MODE = 11
+ADDR_HARDWARE_ERROR_STATUS = 70
 ADDR_CURRENT_LIMIT = 38
 ADDR_TORQUE_ENABLE = 64
 ADDR_GOAL_CURRENT = 102
@@ -96,6 +98,10 @@ ADDR_PROFILE_ACCELERATION = 108
 # Operating Modes
 OP_CURRENT_BASED_POSITION = 5
 OP_CURRENT_CONTROL = 0
+
+# 硬件错误打印限流
+_hw_error_last_print = {}  # servo_id -> last_print_time
+HW_ERROR_PRINT_INTERVAL = 3.0  # 同一舵机硬件错误最多每3秒打印一次
 
 
 class TouchDataStore:
@@ -224,7 +230,7 @@ class ServoController:
 		self.finger_name = FINGER_NAMES.get(servo_id, f"手指{servo_id}")
 		self.targetForceN = 0.0
 		self.kN_per_mA = 0.8
-		self.currentLimit_mA = 450
+		self.currentLimit_mA = 300  # 降低单舵机硬件电流上限，防止串联时电源过载
 		self.touchMode = False
 		self.holdMode = False
 		self.freeModeActive = False
@@ -258,13 +264,22 @@ running = True
 
 # ===== 舵机底层读写 =====
 
+def _hw_error_throttled_print(servo_id: int, msg: str) -> None:
+	"""硬件错误限流打印，同一舵机每3秒最多打印一次"""
+	now = time.time()
+	last = _hw_error_last_print.get(servo_id, 0)
+	if now - last >= HW_ERROR_PRINT_INTERVAL:
+		print(msg)
+		_hw_error_last_print[servo_id] = now
+
+
 def read2ByteSigned(servo_id: int, addr: int) -> int:
 	with dxl_lock:
 		val, res, err = packetHandler.read2ByteTxRx(portHandler, servo_id, addr)
 	if res != COMM_SUCCESS:
-		print(f"[舵机{servo_id}] 读取错误: {packetHandler.getTxRxResult(res)}")
+		_hw_error_throttled_print(servo_id, f"[舵机{servo_id}] 读取错误: {packetHandler.getTxRxResult(res)}")
 	elif err != 0:
-		print(f"[舵机{servo_id}] 硬件错误: {packetHandler.getRxPacketError(err)}")
+		_hw_error_throttled_print(servo_id, f"[舵机{servo_id}] 硬件错误: {packetHandler.getRxPacketError(err)}")
 	if val > 32767:
 		val -= 65536
 	return val
@@ -274,9 +289,9 @@ def read4ByteSigned(servo_id: int, addr: int) -> int:
 	with dxl_lock:
 		val, res, err = packetHandler.read4ByteTxRx(portHandler, servo_id, addr)
 	if res != COMM_SUCCESS:
-		print(f"[舵机{servo_id}] 读取错误: {packetHandler.getTxRxResult(res)}")
+		_hw_error_throttled_print(servo_id, f"[舵机{servo_id}] 读取错误: {packetHandler.getTxRxResult(res)}")
 	elif err != 0:
-		print(f"[舵机{servo_id}] 硬件错误: {packetHandler.getRxPacketError(err)}")
+		_hw_error_throttled_print(servo_id, f"[舵机{servo_id}] 硬件错误: {packetHandler.getRxPacketError(err)}")
 	if val > 2147483647:
 		val -= 4294967296
 	return val
@@ -942,12 +957,12 @@ def loop() -> None:
 					set_operating_mode(controller.servo_id, OP_CURRENT_CONTROL)
 					print(f"[舵机{controller.servo_id}/{controller.finger_name}] PID闭环, 目标={targetN:.2f}N, BLE反馈={feedbackN:.2f}N")
 
-				# PID 计算
+				# PID 计算（先暂存，后面统一做总电流限制再写入）
 				output_mA = pid_control(controller, targetN, feedbackN, dt)
 				controller.pid_output = output_mA
 				output_mA = max(-controller.currentLimit_mA,
 							   min(controller.currentLimit_mA, output_mA))
-				write_goal_current(controller.servo_id, output_mA)
+				controller._pending_current = output_mA
 
 				# PID 调试打印 — 默认关闭，避免额外串口读+print开销
 				if PID_DEBUG and current_time - last_pid_debug >= PID_DEBUG_INTERVAL:
@@ -957,6 +972,25 @@ def loop() -> None:
 						f"T={targetN:.1f} F={feedbackN:.1f} O={output_mA:.0f}mA "
 						f"R={present_cur}mA {controller.state}"
 					)
+
+			# ===== 五指总电流限制 =====
+			# 收集所有待写入的正电流（拉紧方向），如果总和超限则等比缩放
+			active_currents = []
+			for c in servo_controllers:
+				if hasattr(c, '_pending_current'):
+					active_currents.append(c)
+			total_positive = sum(max(0, c._pending_current) for c in active_currents)
+			if total_positive > TOTAL_CURRENT_LIMIT and total_positive > 0:
+				scale = TOTAL_CURRENT_LIMIT / total_positive
+				for c in active_currents:
+					if c._pending_current > 0:
+						c._pending_current *= scale
+						c.pid_output = c._pending_current
+
+			# 统一写入电流
+			for c in active_currents:
+				write_goal_current(c.servo_id, c._pending_current)
+				del c._pending_current
 
 			# 更新PID调试打印时间戳 (在for循环外)
 			if PID_DEBUG and current_time - last_pid_debug >= PID_DEBUG_INTERVAL:
@@ -978,13 +1012,20 @@ def loop() -> None:
 
 				active_servos = [c for c in servo_controllers if c.touchMode or c.releasing]
 				if active_servos:
+					# 读取所有活跃舵机的实际电流（集成监测，无需额外monitor程序）
+					real_currents = {}
+					for c in active_servos:
+						real_currents[c.servo_id] = read2ByteSigned(c.servo_id, ADDR_PRESENT_CURRENT)
 					parts = [f"[{freq:.0f}Hz]"]
 					for c in active_servos:
+						rc = real_currents.get(c.servo_id, 0)
 						if c.releasing:
-							parts.append(f"{c.finger_name}:REL {c.pid_output:.0f}mA")
+							parts.append(f"{c.finger_name}:REL O={c.pid_output:.0f} R={rc}mA")
 						else:
 							err = c.filtered_target - c.filtered_feedback
-							parts.append(f"{c.finger_name}:{c.state} T={c.filtered_target:.1f} F={c.filtered_feedback:.1f} E={err:.2f} O={c.pid_output:.0f}mA")
+							parts.append(f"{c.finger_name}:{c.state} T={c.filtered_target:.1f} F={c.filtered_feedback:.1f} O={c.pid_output:.0f} R={rc}mA")
+					total = sum(abs(v) for v in real_currents.values())
+					parts.append(f"Σ={total}mA")
 					print(" | ".join(parts))
 				last_print = current_time
 

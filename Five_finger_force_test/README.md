@@ -34,7 +34,7 @@ dds_to_force.py (终端3)       finger_force.py (终端2)
 
 STM32 发送:
 ```json
-{"touch_sensors": [大拇指N, 食指N, 中指N, 无名指N, 小指N]}
+[大拇指N, 食指N, 中指N, 无名指N, 小指N]
 ```
 五个力值 (N) 分别对应五根手指，一一映射到舵机 1~5。
 
